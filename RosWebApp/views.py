@@ -3,6 +3,10 @@ from .models import Robot
 
 # Create your views here.
 
+# def home(request):
+#     robots = Robot.objects.all()
+#     return render(request, 'RosWebApp/robopg.html')
+
 def home(request):
     robots = Robot.objects.all()
     return render(request, 'RosWebApp/frontpg.html', {'robots': robots})
