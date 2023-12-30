@@ -1,0 +1,20 @@
+<div class="w-1/4 rounded-xl border-2 border-black">
+    <div class="my-4 font-bold text-2xl text-center">Data Display Panel</div>
+    <div class="m-4 flex flex-col">
+        <div class="my-2">
+            <h4 class="text-xl my-1">UGV Tank Local Position</h4>
+            <p>
+                Position: x = <span id="odom_linear_x"></span>, y = <span id="odom_linear_y"></span>, z = <span id="odom_linear_z"></span><br>
+                Orientation:  x = <span id="odom_angular_x"></span>, y = <span id="odom_angular_y"></span>, z = <span id="odom_angular_z"></span>
+            </p>
+        </div>
+        <div class="my-2">
+            <h4 class="text-xl my-1">UGV Tank IMU Data</h4>
+            <p>
+                Orientation: x = <span id="imu_orient_x"></span>, y = <span id="imu_orient_y"></span>, z = <span id="imu_orient_z"></span>, w = <span id="imu_orient_w"></span><br>
+                Angular Velocity:  x = <span id="imu_angVel_x"></span>, y = <span id="imu_angVel_y"></span>, z = <span id="imu_angVel_z"></span><br>
+                Linear Acceleration: x = <span id="imu_linearAcc_x"></span>, y = <span id="imu_linearAcc_y"></span>, z = <span id="imu_linearAcc_z"></span>
+            </p>
+        </div>
+    </div>
+</div>

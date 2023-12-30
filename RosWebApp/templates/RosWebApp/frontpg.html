@@ -18,14 +18,11 @@
 
     <div class="flex justify-center items-center">
         <div class="grid grid-cols-3 gap-12">
-
-            <!-- Loop through each robot in the context -->
             {% for robot in robots %}
                 <div>
-                    <button>
-                        <div class="bg-white rounded-lg shadow-md p-6 w-96 flex flex-col items-center" id="robotDetailsCard">
+                    <a href="{% url 'robot_page' id=robot.id %}">
+                        <div class="bg-white rounded-lg shadow-md p-6 w-96 flex flex-col items-center">
                             <div>
-                                <!-- Use the robot_icon field to display the image -->
                                 <img src="{{ robot.robot_icon.url }}" alt="robot-img" class="rounded-full h-24 w-24"/>
                             </div>
                             <div class="mt-4">
@@ -35,22 +32,10 @@
                                 <span class="font-semibold">Type:</span> {{ robot.robot_type }}
                             </div>
                         </div>
-                    </button>
+                    </a>
                 </div>
             {% endfor %}
-
         </div>
     </div>
-
-    <script>
-        // Get the button element
-        var buttonElement = document.getElementById('robotDetailsCard');
-    
-        // Add a click event listener to the button
-        buttonElement.addEventListener('click', function() {
-            // Redirect to the new page
-            window.location.href = '/tb3/';
-        });
-    </script>
 </body>
 </html>

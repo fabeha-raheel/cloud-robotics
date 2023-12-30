@@ -7,5 +7,8 @@ def home(request):
     robots = Robot.objects.all()
     return render(request, 'RosWebApp/frontpg.html', {'robots': robots})
 
-def Turtlebot3(request):
-    return render(request, 'RosWebApp/index.html')
+def robot_page(request, id, *args, **kwargs):
+    robot = Robot.objects.get(id=id)
+    print(id, args, kwargs)
+    context = {'robot': robot}
+    return render(request, 'RosWebApp/index.html', context)

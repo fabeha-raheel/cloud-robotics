@@ -59,9 +59,9 @@
                 <div class="connected-robots">
                     <!-- ------------------- Robot Card ------------------ -->
                     <div class="robot">
-                        <div class="robot-image-container"><img class="robo-img" src="{% static 'RosWebApp/images/tank_v1.jpg' %}" alt="" srcset=""></div>
+                        <div class="robot-image-container"><img class="robo-img" src="{{ robot.robot_icon.url }}" alt="" srcset=""></div>
                         <div class="robot-data">
-                            <h3>UGV Tank</h3>
+                            <h3>{{ robot.robot_name }}</h3>
                             <p class="robo-des">Status: <span id="connection-status"></span></p>
                         </div>
                     </div>
@@ -85,13 +85,13 @@
                 <div class="data-area">
                     <div class="data-container">
                         <h2>Data Display Panel</h2>
-                        <div class="odom-data-container">
+                        <!-- <div class="odom-data-container">
                             <h4>UGV Tank Local Position</h4>
                             <p>
-                                Position: x = <span id="odom_linear_x"></span>, y = <span id="odom_linear_y"></span>, z = <span id="odom_linear_z"></span><br>
-                                Orientation:  x = <span id="odom_angular_x"></span>, y = <span id="odom_angular_y"></span>, z = <span id="odom_angular_z"></span>
+                                Position: x = <span id="pose_linear_x"></span>, y = <span id="pose_linear_y"></span>, z = <span id="pose_linear_z"></span><br>
+                                Orientation:  x = <span id="pose_angular_x"></span>, y = <span id="pose_angular_y"></span>, z = <span id="pose_angular_z"></span>
                             </p>
-                        </div>
+                        </div> -->
                         <div class="imu-data-container">
                             <h4>UGV Tank IMU Data</h4>
                             <p>

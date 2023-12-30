@@ -1,0 +1,23 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Page</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+    {% tailwind_css %}
+</head>
+
+<body class="bg-gray-200">
+    {% include 'RosWebApp/header.html' %}
+    <div>
+        <h1>Robot 1</h1>
+        {% include 'RosWebApp/controls.html' %}
+        {% include 'RosWebApp/datadisplay.html' %}
+        {% include 'RosWebApp/maps.html' %}
+    </div>
+    <script src="{% static 'RosWebApp/main.js' %}"></script> 
+</body>
+</html>
