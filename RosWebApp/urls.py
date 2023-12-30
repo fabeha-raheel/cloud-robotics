@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name=''),
-    path('tb3/', views.Turtlebot3, name='Turtlebot3'), 
+    path('robot/<int:id>/', views.robot_page, name='robot_page'),
 ]
