@@ -1,0 +1,26 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROS Web</title>
+    {% tailwind_css %}
+</head>
+
+<body class="bg-gray-200 font-sans">
+    <div class="bg-teal-500 p-6 flex justify-between items-center shadow">
+        <h1 class="text-white text-4xl font-bold">Robot Web Interface</h1>
+        <div class="flex items-center">
+            <div class="text-white ml-6">
+                <div class="text-xl font-bold">Applied Electronmagnetics & Electronics Lab</div>
+                <div class="text-md">Prince Sattam bin Abdul Aziz University</div>
+            </div>
+            <div class="ml-6">
+                <img src="{% static 'RosWebApp/images/aeelab_logo.jpeg' %}" alt="logo-img" class="rounded-full h-16 w-16">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

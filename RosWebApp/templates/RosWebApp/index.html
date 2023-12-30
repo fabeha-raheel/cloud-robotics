@@ -1,0 +1,137 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROS Web UI</title>
+
+    <!-- Tomtom Maps API Link -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.18.0/maps/maps.css"
+    />
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.18.0/maps/maps-web.min.js"></script>
+
+    <!-- Link CSS File -->
+    <link rel="stylesheet" href="{% static 'RosWebApp/style.css' %}">
+
+    <!-- Add Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Adding Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+</head>
+<body>
+    <!-- Main Page - that will contain everything -->
+    <div class="main-page">
+        <!-- ------------------- Top Header ------------------ -->
+        <div class="header">
+            <!-- ------------------- Application Title ------------------ -->
+            <h1>Robot Web Interface</h1>
+            <div class="center-empty-area"></div>
+            <!-- ------------------- Logo Side ------------------ -->
+            <div class="logo-side">
+                <div class="logo-name">
+                    <div class="lab-name">Applied Electronmagnetics & Electronics Lab</div>
+                    <div class="uni-name">Prince Sattam bin Abdul Aziz University</div>
+                </div>
+                <div class="logo-image">
+                    <img src="{% static 'RosWebApp/images/aeelab_logo.jpeg' %}" alt="logo-img" height="70px">
+                </div>
+            </div>
+        </div>
+
+        <!-- ------------------- Content Area ------------------ -->
+        <!-- ------------ Everything below the Header ---------- -->
+        <div class="content-area">
+            <!-- ------------------- Side Line ------------------ -->
+            <div class="side-line"></div>
+            <!-- ------------------- Connected Robots Panel ------------------ -->
+            <div class="connected-robots-panel">
+                <div class="empty-bar"></div>
+                <h2>Connected Robots</h2>
+                <!-- ------------------- Connected Robots List ------------------ -->
+                <div class="connected-robots">
+                    <!-- ------------------- Robot Card ------------------ -->
+                    <div class="robot">
+                        <div class="robot-image-container"><img class="robo-img" src="{% static 'RosWebApp/images/tank_v1.jpg' %}" alt="" srcset=""></div>
+                        <div class="robot-data">
+                            <h3>UGV Tank</h3>
+                            <p class="robo-des">Status: <span id="connection-status"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ------------------- visual Area ------------------ -->
+            <div class="empty-area2"></div>
+            <div class="visual-area">
+                <!-- ------------------- Map Video Area ------------------ -->
+                <div class="map-video-area">
+                    <div class="video-container">
+                        <div id="frameContainer">
+                            <img id="frameImage" src="" alt="Video Frame">
+                        </div>
+                    </div>
+                    <div id="map" class="map-container"></div>
+                    <!-- <canvas id="plot-canvas" width="500" height="500"></canvas> -->
+                </div>
+                
+                <!-- ------------------- Data Area ------------------ -->
+                <div class="data-area">
+                    <div class="data-container">
+                        <h2>Data Display Panel</h2>
+                        <div class="odom-data-container">
+                            <h4>UGV Tank Local Position</h4>
+                            <p>
+                                Position: x = <span id="odom_linear_x"></span>, y = <span id="odom_linear_y"></span>, z = <span id="odom_linear_z"></span><br>
+                                Orientation:  x = <span id="odom_angular_x"></span>, y = <span id="odom_angular_y"></span>, z = <span id="odom_angular_z"></span>
+                            </p>
+                        </div>
+                        <div class="imu-data-container">
+                            <h4>UGV Tank IMU Data</h4>
+                            <p>
+                                Orientation: x = <span id="imu_orient_x"></span>, y = <span id="imu_orient_y"></span>, z = <span id="imu_orient_z"></span>, w = <span id="imu_orient_w"></span><br>
+                                Angular Velocity:  x = <span id="imu_angVel_x"></span>, y = <span id="imu_angVel_y"></span>, z = <span id="imu_angVel_z"></span><br>
+                                Linear Acceleration: x = <span id="imu_linearAcc_x"></span>, y = <span id="imu_linearAcc_y"></span>, z = <span id="imu_linearAcc_z"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="controlbox-container">
+                        <h2>Control Panel</h2>
+                        <div class="control-buttons">
+                            <div class="row1">
+                                <span id="upBtn" class="circle"><i class="material-icons" style="font-size: 36px; color: white;">arrow_upward</i></span>
+                            </div>
+                            <div class="row2">
+                                <span id="leftBtn" class="circle"><i class="material-icons" style="font-size: 36px; color: white;">rotate_left</i></span>
+                                <span id="stopBtn" class="circle"><i class="material-icons" style="font-size: 36px; color: white;">stop</i></span>
+                                <span id="rightBtn" class="circle"><i class="material-icons" style="font-size: 36px; color: white;">rotate_right</i></span>
+                            </div>
+                            <div class="row3"><span id="downBtn" class="circle"><i class="material-icons" style="font-size: 36px; color: white;">arrow_downward</i></span></div>
+                        </div>
+                    </div> 
+                </div>
+                <!-- ------------------- Copyrights Footer Area ------------------ -->
+                <div class="footer-div">
+                    <footer>
+                        <div class="copyrights-div">
+                            <div>
+                                Copyright &copy; <script>document.write(new Date().getFullYear())</script> (Version: 1.1-dev)
+                            </div>
+                            <div>Developer: Engr. Fabeha Raheel</div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+            <div class="empty-area2"></div>
+        </div>
+    </div>
+    
+    <script src="{% static 'RosWebApp/main.js' %}"></script>    
+</body>
+</html>

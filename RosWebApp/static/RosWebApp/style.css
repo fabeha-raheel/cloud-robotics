@@ -1,0 +1,281 @@
+/********************** Complete Page *************************/
+*{
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: white;
+}
+
+.main-page{
+    min-height: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/********************** Header *************************/
+.header{
+    background-color: #11a6ac;
+    height: 15%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    z-index: 10;
+    min-height: 70px;
+}
+
+h1{
+    font-family: 'Lato', sans-serif;
+    color: white;
+    font-size: 2.5rem;
+    padding-left: 10px;
+}
+
+.logo-side{
+    display: flex;
+    width: fit-content;
+    height: 100%;
+    justify-content: center;
+}
+
+.logo-name{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+    font-family: 'Lato', sans-serif;
+    color: white;
+    align-items: center;
+}
+
+.lab-name{
+    font-size: large;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px grey;
+}
+.uni-name{
+    font-size: medium;
+    text-shadow: 1px 1px 2px grey;
+}
+
+.logo-image{
+    padding-right: 5px;
+    padding-left: 5px;
+    object-fit: fill;
+}
+
+/********************** Content Area *************************/
+.content-area{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+/*************** Side Line *****************/
+.side-line{
+    background-color: white;
+    height: 100%;
+    width: 25px;
+}
+
+/********************** Connected Robots *************************/
+.connected-robots-panel{
+    width: 35%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    z-index: 9;
+    align-items: center;
+    padding: 10px;
+}
+.empty-bar{
+    width: 100%;
+    height: 25px;
+}
+
+h2{
+    font-family: 'Lato', sans-serif;
+    color: rgb(44, 48, 46);
+    font-size: 1.5rem;
+    padding: 5px;
+    text-align: center;
+}
+
+.connected-robots{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.robot{
+    background-color: whitesmoke;
+    width: 100%;
+    height: 25%;
+    display: flex;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.robot-image-container{
+    width: 75%;
+    height: 100%;
+}
+
+.robo-img{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+}
+.robot-data{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 10px;
+}
+
+h3{
+    text-align: center;
+    font-size: medium;
+}
+
+.robo-des{
+    text-align: center;
+}
+
+#connection-status{
+    font-weight: bold;
+}
+/********************** Visual Area *************************/
+.visual-area{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.empty-area2{
+    height: 100%;
+    width: 15px;
+}
+
+.map-video-area{
+    width: 100%;
+    height: 50%;
+    background-color: white;
+    display: flex;
+}
+
+.video-container{
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-container{
+    width: 100%;
+    height: 100%;
+}
+
+#frameContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Set the height to occupy the full viewport height (adjust as needed) */
+}
+
+#frameImage {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/********************** Data Area *************************/
+
+.data-area{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    
+}
+
+.data-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.odom-data-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+}
+
+.imu-data-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+}
+
+.controlbox-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid rgb(163, 162, 162);
+    border-radius:20px;
+    margin-top: 5px;
+}
+
+.control-buttons{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.row2{
+    display: flex;
+    gap: 20px;
+}
+
+.circle {
+    height: 75px;
+    width: 75px;
+    background-color: #8e9497;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+/********************** Footer *************************/
+.copyrights-div{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: small;
+    padding: 10px;
+}
