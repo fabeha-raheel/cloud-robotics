@@ -1,7 +1,8 @@
-{% load static %}
+<!-- {% load static tailwind_tags %} -->
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,123 +16,158 @@
     />
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.18.0/maps/maps-web.min.js"></script>
 
-    <!-- Link CSS File -->
-    <link rel="stylesheet" href="{% static 'RosWebApp/style.css' %}">
-
-    <!-- Add Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
-
     <!-- Adding Google Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-
+    <!-- {% tailwind_css %} -->
 </head>
-<body>
-    <!-- Main Page - that will contain everything -->
-    <div class="main-page">
-        <!-- ------------------- Top Header ------------------ -->
-        <div class="header">
-            <!-- ------------------- Application Title ------------------ -->
-            <h1>Robot Web Interface</h1>
-            <div class="center-empty-area"></div>
-            <!-- ------------------- Logo Side ------------------ -->
-            <div class="logo-side">
-                <div class="logo-name">
-                    <div class="lab-name">Applied Electronmagnetics & Electronics Lab</div>
-                    <div class="uni-name">Prince Sattam bin Abdul Aziz University</div>
+
+<body class="bg-gray-200 font-sans h-screen w-screen">
+
+    {% include 'RosWebApp/header.html' %}
+
+    <div class="flex p-4 justify-center items-center">
+
+        <!-- Robot Info Component -->
+        <div class="mx-1 h-[800px]">
+            <div class="bg-teal-500 shadow text-white h-full w-80 rounded-xl border-2">
+                <div class="m-3">
+                    <img class="h-64 w-full rounded-md" src="{{ robot.robot_icon.url }}" alt="" srcset="">
                 </div>
-                <div class="logo-image">
-                    <img src="{% static 'RosWebApp/images/aeelab_logo.jpeg' %}" alt="logo-img" height="70px">
+                <div class="m-3 font-bold text-center text-4xl whitespace-normal">{{ robot.robot_name }}</div>
+                <div class="m-3 text-lg whitespace-normal">Type: {{ robot.robot_type }}</div>
+                <div class="m-3 text-lg whitespace-normal">Status: <p id="connection-status"></p></div>
+                <div class="flex flex-col">
+                    <button class="bg-white rounded-md p-2.5 m-3 text-teal-800 font-bold text-base">Connect</button>
+                    <button class="bg-white rounded-md p-2.5 m-3 text-teal-800 font-bold text-base">Disconnect</button>
                 </div>
             </div>
         </div>
 
-        <!-- ------------------- Content Area ------------------ -->
-        <!-- ------------ Everything below the Header ---------- -->
-        <div class="content-area">
-            <!-- ------------------- Side Line ------------------ -->
-            <div class="side-line"></div>
-            <!-- ------------------- Connected Robots Panel ------------------ -->
-            <div class="connected-robots-panel">
-                <div class="empty-bar"></div>
-                <h2>Connected Robots</h2>
-                <!-- ------------------- Connected Robots List ------------------ -->
-                <div class="connected-robots">
-                    <!-- ------------------- Robot Card ------------------ -->
-                    <div class="robot">
-                        <div class="robot-image-container"><img class="robo-img" src="{{ robot.robot_icon.url }}" alt="" srcset=""></div>
-                        <div class="robot-data">
-                            <h3>{{ robot.robot_name }}</h3>
-                            <p class="robo-des">Status: <span id="connection-status"></span></p>
-                        </div>
+        <!-- Tabs of Video Frame and Maps -->
+        <div class="mx-1 w-[950px]">
+            <div class="bg-teal-500 rounded-xl flex items-center justify-center w-[950px] h-[800px]">
+                <div class=" bg-white shadow-md rounded-lg overflow-hidden">
+                    <div class="flex">
+                        <button class="tablinks flex-1 px-6 py-4 text-center text-teal-500 hover:bg-teal-100 focus:outline-none" onclick="mytabs(event, 'VideoFrame')" id="defaultOpenVideoFrame">Video Frame</button>
+                        <button class="tablinks flex-1 px-6 py-4 text-center text-teal-500 hover:bg-teal-100 focus:outline-none" onclick="mytabs(event, 'Maps')" id="defaultOpenMaps">Maps</button>
                     </div>
-                </div>
-            </div>
-            <!-- ------------------- visual Area ------------------ -->
-            <div class="empty-area2"></div>
-            <div class="visual-area">
-                <!-- ------------------- Map Video Area ------------------ -->
-                <div class="map-video-area">
-                    <div class="video-container">
-                        <div id="frameContainer">
-                            <img id="frameImage" src="" alt="Video Frame">
-                        </div>
-                    </div>
-                    <div id="map" class="map-container"></div>
-                    <!-- <canvas id="plot-canvas" width="500" height="500"></canvas> -->
-                </div>
                 
-                <!-- ------------------- Data Area ------------------ -->
-                <div class="data-area">
-                    <div class="data-container">
-                        <h2>Data Display Panel</h2>
-                        <!-- <div class="odom-data-container">
-                            <h4>UGV Tank Local Position</h4>
-                            <p>
-                                Position: x = <span id="pose_linear_x"></span>, y = <span id="pose_linear_y"></span>, z = <span id="pose_linear_z"></span><br>
-                                Orientation:  x = <span id="pose_angular_x"></span>, y = <span id="pose_angular_y"></span>, z = <span id="pose_angular_z"></span>
-                            </p>
-                        </div> -->
-                        <div class="imu-data-container">
-                            <h4>UGV Tank IMU Data</h4>
-                            <p>
-                                Orientation: x = <span id="imu_orient_x"></span>, y = <span id="imu_orient_y"></span>, z = <span id="imu_orient_z"></span>, w = <span id="imu_orient_w"></span><br>
-                                Angular Velocity:  x = <span id="imu_angVel_x"></span>, y = <span id="imu_angVel_y"></span>, z = <span id="imu_angVel_z"></span><br>
-                                Linear Acceleration: x = <span id="imu_linearAcc_x"></span>, y = <span id="imu_linearAcc_y"></span>, z = <span id="imu_linearAcc_z"></span>
-                            </p>
+                    <div class="tabcontent hidden p-6" id="VideoFrame">
+                        <div class="mx-auto w-[890px] h-[682px] rounded-xl border-2 border-teal-500 bg-white p-4">
+                            <div class="flex justify-center items-center">
+                                <img id="frameImage" src="" alt="Video Frame" class="w-[940px] h-[650px] object-cover rounded-xl">
+                            </div>
                         </div>
                     </div>
-                    <div class="controlbox-container">
-                        <h2>Control Panel</h2>
-                        <div class="control-buttons">
-                            <div class="row1">
-                                <span id="upBtn" class="circle"><i class="material-icons" style="font-size: 36px; color: white;">arrow_upward</i></span>
+                
+                    <div class="tabcontent hidden p-6" id="Maps">
+                        <div class="mx-auto w-[890px] h-[682px] rounded-xl border-2 border-teal-500 bg-white p-4">
+                            <div class="flex justify-center items-center">
+                                <div id="map" class=""></div>
                             </div>
-                            <div class="row2">
-                                <span id="leftBtn" class="circle"><i class="material-icons" style="font-size: 36px; color: white;">rotate_left</i></span>
-                                <span id="stopBtn" class="circle"><i class="material-icons" style="font-size: 36px; color: white;">stop</i></span>
-                                <span id="rightBtn" class="circle"><i class="material-icons" style="font-size: 36px; color: white;">rotate_right</i></span>
-                            </div>
-                            <div class="row3"><span id="downBtn" class="circle"><i class="material-icons" style="font-size: 36px; color: white;">arrow_downward</i></span></div>
                         </div>
-                    </div> 
-                </div>
-                <!-- ------------------- Copyrights Footer Area ------------------ -->
-                <div class="footer-div">
-                    <footer>
-                        <div class="copyrights-div">
-                            <div>
-                                Copyright &copy; <script>document.write(new Date().getFullYear())</script> (Version: 1.1-dev)
-                            </div>
-                            <div>Developer: Engr. Fabeha Raheel</div>
-                        </div>
-                    </footer>
+                    </div>
                 </div>
             </div>
-            <div class="empty-area2"></div>
         </div>
+
+        <div class="mx-1 flex flex-col w-[550px]">
+
+            <!-- Data Display Component -->
+            <div class="h-[450px] mb-1">
+                <div class="h-full w-full rounded-xl border-2 border-teal-500 bg-white p-4">
+                    <div class="">
+                        <div class="font-bold text-2xl text-center text-black">Data Display Panel</div>
+                        <div class="flex flex-col">
+                            <div class="my-2">
+                                <h4 class="text-xl my-1">UGV Tank Local Position</h4>
+                                <p>
+                                    <div>Position: x = <span id="odom_linear_x"></span></div> 
+                                    <div>y = <span id="odom_linear_y"></span>, z = <span id="odom_linear_z"></span></div>
+                                    <div>Orientation: x = <span id="odom_angular_x"></span></div> 
+                                    <div>y = <span id="odom_angular_y"></span>, z = <span id="odom_angular_z"></span></div>
+                                </p>
+                            </div>
+                            <div class="">
+                                <h4 class="text-xl my-1">UGV Tank IMU Data</h4>
+                                <p>
+                                    <div>Orientation:</div>
+                                    <div>x = <span id="imu_orient_x"></span>, y = <span id="imu_orient_y"></span></div>
+                                    <div>z = <span id="imu_orient_z"></span>, w = <span id="imu_orient_w"></span></div>
+                                    <div>Angular Velocity: x = <span id="imu_angVel_x"></span></div>
+                                    <div>y = <span id="imu_angVel_y"></span>, z = <span id="imu_angVel_z"></span></div>
+                                    <div>Linear Acceleration: x = <span id="imu_linearAcc_x"></span></div>
+                                    <div>y = <span id="imu_linearAcc_y"></span>, z = <spanid="imu_linearAcc_z"></span></div>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls Component -->
+            <div class="h-[350px] mt-1">
+                <div class="h-full w-full rounded-xl border-2 border-teal-500 bg-white p-4">
+                    <div class="justify-center items-center">
+                        <div class="flex flex-col justify-center items-center mb-4">
+                            <div class="my-4 font-bold text-2xl text-black">Control Panel</div>
+                            <div class="flex p-4">
+                                <div></div>
+                                <button id="upBtn" class="bg-gray-400 w-14 h-14 rounded-full justify-center items-center">
+                                    <i class="material-icons text-white">arrow_upward</i>
+                                </button>
+                                <div></div>
+                            </div>
+                            <div class="p-4">
+                                <button id="leftBtn" class="bg-gray-400 w-14 h-14 rounded-full mx-4">
+                                    <i class="material-icons text-white">rotate_left</i>
+                                </button>
+                                <button id="stopBtn" class="bg-gray-400 w-14 h-14 rounded-full mx-4">
+                                    <i class="material-icons text-white">stop</i>
+                                </button>
+                                <button id="rightBtn" class="bg-gray-400 w-14 h-14 rounded-full mx-4">
+                                    <i class="material-icons text-white">rotate_right</i>
+                                </button>
+                            </div>
+                            <div class="p-4">
+                                <div></div>
+                                <button id="downBtn" class="bg-gray-400 w-14 h-14 rounded-full">
+                                    <i class="material-icons text-white">arrow_downward</i>
+                                </button>
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+
     </div>
+
+    <script src="{% static 'RosWebApp/main.js' %}"></script>
+
+    <script>
+        function mytabs(evt, tabname) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("bg-teal-100", "text-teal-700");
+            }
+            document.getElementById(tabname).style.display = "block";
+            evt.currentTarget.classList.add("bg-teal-100", "text-teal-700");
+        }
+
+        // Get the element with id="defaultOpenVideoFrame" and click on it
+        document.getElementById("defaultOpenVideoFrame").click();
+    </script>
     
-    <script src="{% static 'RosWebApp/main.js' %}"></script>    
 </body>
+
 </html>
