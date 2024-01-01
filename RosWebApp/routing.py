@@ -1,5 +1,4 @@
 from django.urls import re_path
-from channels.routing import ProtocolTypeRouter, URLRouter
 from . import consumers
 
 # websocket_urlpatterns = [
