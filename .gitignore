@@ -4,6 +4,8 @@
 *.pyc
 __pycache__
 */__pycache__
+RosWebServer/__pycache__
+RosWebApp/__pycache__
 db.sqlite3
 media
 
