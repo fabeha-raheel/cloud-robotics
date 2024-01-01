@@ -20,9 +20,9 @@ class WebRobotConsumer(AsyncWebsocketConsumer):
             self.channel_name
         )
 
-    async def receive(self, data):
+    async def receive(self, text_data):
 
-        data = json.loads(data)
+        data = json.loads(text_data)
 
         await self.channel_layer.group_send(
             self.group_name,
@@ -36,8 +36,8 @@ class WebRobotConsumer(AsyncWebsocketConsumer):
         # This method handles messages received by the group.
         # It sends the data to all clients in the group.
 
-        await self.send(data=json.dumps({event['data']}))
-        
+        await self.send(text_data=json.dumps({event['data']}))
+
 
 class TB3Consumer(AsyncWebsocketConsumer):
     
