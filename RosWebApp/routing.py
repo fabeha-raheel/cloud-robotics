@@ -8,5 +8,5 @@ from . import consumers
 # ]
 
 websocket_urlpatterns = [
-    re_path(r'ws/(?P<robot_name>\w+)/webrobot/$', consumers.WebRobotConsumer.as_asgi()),
+    re_path(r'ws/(?P<robot_slug>\w+)$', consumers.WebRobotConsumer.as_asgi()),
 ]
