@@ -6,7 +6,8 @@ class WebRobotConsumer(AsyncWebsocketConsumer):
 
     async def connect(self):
 
-        self.group_name = 'web_robot_clients'
+        robot_name = self.scope['url_route']['kwargs']['robot_name']
+        self.group_name = f'{robot_name}'
 
         await self.channel_layer.group_add(
             self.group_name,
