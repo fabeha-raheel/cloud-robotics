@@ -74,3 +74,118 @@ Pull request from master:
 ```shell
 git pull origin master
 ```
+
+# Tailwind Installation Steps
+
+Install the django-tailwind and browser_reloads package via pip:
+```bash
+python -m pip install django-tailwind
+python -m pip install 'django-tailwind[reload]'
+```
+
+Add 'tailwind' to INSTALLED_APPS in settings.py
+```python
+INSTALLED_APPS = [
+  # other Django apps
+  'tailwind',
+]
+```
+
+Create a Tailwind CSS compatible Django app, I like to call it theme:
+```bash
+python manage.py tailwind init
+```
+
+Add your newly created 'theme' app to INSTALLED_APPS in settings.py
+```python
+INSTALLED_APPS = [
+  # other Django apps
+  'tailwind',
+  'theme'
+]
+```
+Register the generated 'theme' app by adding the following line to settings.py file:
+```python
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+```
+
+Before the next step, make sure you have nodejs and npm installed.
+
+Check nodejs version:
+```bash
+node -v
+```
+Upgrade nodejs:
+```bash
+sudo apt upgrade nodejs
+```
+Install the latest version:
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+sudo apt install curl
+
+source ~/.bashrc
+
+nvm ls-remote
+
+nvm install node
+
+nvm use node
+
+node -v
+```
+
+Check npm version:
+```bash
+npm -v
+```
+Install npm latest version:
+```bash
+npm install -g npm@latest
+npm -v
+```
+
+Run the next command. Install Tailwind CSS dependencies:
+```bash
+python manage.py tailwind install
+```
+
+add and configure django_browser_reload to list of INSTALLED_APPS in settings.py:
+```python
+INSTALLED_APPS = [
+  # other Django apps
+  'tailwind',
+  'theme',
+  'django_browser_reload'
+]
+```
+Add the following in MIDDLEWARE:
+```python
+MIDDLEWARE = [
+  # ...
+  "django_browser_reload.middleware.BrowserReloadMiddleware",
+  # ...
+]
+```
+
+Include django_browser_reload URL in your root url.py
+```python
+from django.urls import include, path
+urlpatterns = [
+    ...,
+    path("__reload__/", include("django_browser_reload.urls")),
+]
+```
+
+Finally, you should be able to use Tailwind CSS classes in HTML. Start the development server by running the following command in your terminal:
+```bash
+python manage.py tailwind start
+```
+
+Ref: https://django-tailwind.readthedocs.io/en/latest/installation.html
+

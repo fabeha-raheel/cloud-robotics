@@ -18,10 +18,14 @@ import RosWebApp.routing
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangoProject.settings')
 
-application = ProtocolTypeRouter({
-    'http': get_asgi_application(),
-    'websocket': AuthMiddlewareStack(
-        URLRouter(RosWebApp.routing.websocket_urlpatterns)
-    )
-})
+application = ProtocolTypeRouter(
+    {
+        "http": get_asgi_application(),
+        "websocket": AuthMiddlewareStack(
+            URLRouter(
+                RosWebApp.routing.websocket_urlpatterns
+            )
+        )
+    }
+)
 

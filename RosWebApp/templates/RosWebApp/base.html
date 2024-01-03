@@ -6,13 +6,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROS Web</title>
+    <title>{% block title %}{% endblock %} ROS WebApp</title>
+
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
     {% tailwind_css %}
 </head>
 
 <body class="bg-gray-200 font-sans">
-    <div class="bg-teal-500 p-6 flex justify-between items-center shadow">
+    <nav class="bg-teal-500 p-6 flex justify-between items-center shadow">
         <button onclick="navigateToHomePage()" class="flex items-center">
             {% if request.path == '/' %}
                 <!-- Hide the arrow if the page is in the root path -->
@@ -31,7 +33,10 @@
                 <img src="{% static 'RosWebApp/images/aeelab_logo.jpeg' %}" alt="logo-img" class="rounded-full h-16 w-16">
             </div>
         </div>
-    </div>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
 
     <script>
         function navigateToHomePage() {
@@ -39,6 +44,9 @@
             window.location.href = '/';
         }
     </script>
+
+    {% block scripts %}
+    {% endblock %}
 </body>
 
 </html>

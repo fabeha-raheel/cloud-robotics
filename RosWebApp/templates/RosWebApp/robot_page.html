@@ -1,0 +1,174 @@
+{% extends 'RosWebApp/base.html' %}
+
+{% block title %}Home |{% endblock %}
+
+{% block content %}
+
+<div class="flex p-4 justify-center items-center">
+
+    <!-- Robot Info Component -->
+    <div class="mx-1 h-[800px]">
+        <div class="bg-teal-500 shadow text-white h-full w-80 rounded-xl border-2">
+            <div class="m-3">
+                <img class="h-64 w-full rounded-md" src="{{ robot.robot_icon.url }}" alt="" srcset="">
+            </div>
+            <div class="m-3 font-bold text-center text-4xl whitespace-normal">{{ robot.robot_name }}</div>
+            <div class="m-3 text-lg whitespace-normal">Type: {{ robot.robot_type }}</div>
+            <div class="m-3 text-lg whitespace-normal">Status: <p id="connection-status"></p></div>
+            <div class="flex flex-col">
+                <button class="bg-white rounded-md p-2.5 m-3 text-teal-800 font-bold text-base">Connect</button>
+                <button class="bg-white rounded-md p-2.5 m-3 text-teal-800 font-bold text-base">Disconnect</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabs of Video Frame and Maps -->
+    <div class="mx-1 w-[950px]">
+        <div class="bg-teal-500 rounded-xl flex items-center justify-center w-[950px] h-[800px]">
+            <div class=" bg-white shadow-md rounded-lg overflow-hidden">
+                <div class="flex">
+                    <button class="tablinks flex-1 px-6 py-4 text-center text-teal-500 hover:bg-teal-100 focus:outline-none" onclick="mytabs(event, 'VideoFrame')" id="defaultOpenVideoFrame">Video Frame</button>
+                    <button class="tablinks flex-1 px-6 py-4 text-center text-teal-500 hover:bg-teal-100 focus:outline-none" onclick="mytabs(event, 'Maps')" id="defaultOpenMaps">Maps</button>
+                </div>
+            
+                <div class="tabcontent hidden p-6" id="VideoFrame">
+                    <div class="mx-auto w-[890px] h-[682px] rounded-xl border-2 border-teal-500 bg-white p-4">
+                        <div class="flex justify-center items-center">
+                            <img id="frameImage" src="" alt="Video Frame" class="w-[940px] h-[650px] object-cover rounded-xl">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="tabcontent hidden p-6" id="Maps">
+                    <div class="mx-auto w-[890px] h-[682px] rounded-xl border-2 border-teal-500 bg-white p-4">
+                        <div class="flex justify-center items-center">
+                            <div id="map" class=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mx-1 flex flex-col w-[550px]">
+
+        <!-- Data Display Component -->
+        <div class="h-[450px] mb-1">
+            <div class="h-full w-full rounded-xl border-2 border-teal-500 bg-white p-4">
+                <div class="">
+                    <div class="font-bold text-2xl text-center text-black">Data Display Panel</div>
+                    <div class="flex flex-col">
+                        <div class="my-2">
+                            <h4 class="text-xl my-1">UGV Tank Local Position</h4>
+                            <p>
+                                <div>Position: x = <span id="odom_linear_x"></span></div> 
+                                <div>y = <span id="odom_linear_y"></span>, z = <span id="odom_linear_z"></span></div>
+                                <div>Orientation: x = <span id="odom_angular_x"></span></div> 
+                                <div>y = <span id="odom_angular_y"></span>, z = <span id="odom_angular_z"></span></div>
+                            </p>
+                        </div>
+                        <div class="">
+                            <h4 class="text-xl my-1">UGV Tank IMU Data</h4>
+                            <p>
+                                <div>Orientation:</div>
+                                <div>x = <span id="imu_orient_x"></span>, y = <span id="imu_orient_y"></span></div>
+                                <div>z = <span id="imu_orient_z"></span>, w = <span id="imu_orient_w"></span></div>
+                                <div>Angular Velocity: x = <span id="imu_angVel_x"></span></div>
+                                <div>y = <span id="imu_angVel_y"></span>, z = <span id="imu_angVel_z"></span></div>
+                                <div>Linear Acceleration: x = <span id="imu_linearAcc_x"></span></div>
+                                <div>y = <span id="imu_linearAcc_y"></span>, z = <spanid="imu_linearAcc_z"></span></div>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls Component -->
+        <div class="h-[350px] mt-1">
+            <div class="h-full w-full rounded-xl border-2 border-teal-500 bg-white p-4">
+                <div class="justify-center items-center">
+                    <div class="flex flex-col justify-center items-center mb-4">
+                        <div class="my-4 font-bold text-2xl text-black">Control Panel</div>
+                        <div class="flex p-4">
+                            <div></div>
+                            <button id="upBtn" class="bg-gray-400 w-14 h-14 rounded-full justify-center items-center">
+                                <i class="material-icons text-white">arrow_upward</i>
+                            </button>
+                            <div></div>
+                        </div>
+                        <div class="p-4">
+                            <button id="leftBtn" class="bg-gray-400 w-14 h-14 rounded-full mx-4">
+                                <i class="material-icons text-white">rotate_left</i>
+                            </button>
+                            <button id="stopBtn" class="bg-gray-400 w-14 h-14 rounded-full mx-4">
+                                <i class="material-icons text-white">stop</i>
+                            </button>
+                            <button id="rightBtn" class="bg-gray-400 w-14 h-14 rounded-full mx-4">
+                                <i class="material-icons text-white">rotate_right</i>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <div></div>
+                            <button id="downBtn" class="bg-gray-400 w-14 h-14 rounded-full">
+                                <i class="material-icons text-white">arrow_downward</i>
+                            </button>
+                            <div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+{{ robot.robot_slug|json_script:"json-robotname" }}
+
+<script>
+    const robotName = JSON.parse(document.getElementById('json-robotname').textContent);
+    
+    const robot_websocket = new WebSocket(
+        'ws://' 
+        + window.location.host 
+        + '/ws/' 
+        + robotName 
+        + '/'
+    );
+
+    robot_websocket.onmessage = function(e){
+        console.log("onmessage")
+    }
+
+    robot_websocket.onclose = function(e){
+        console.log('onclose')
+    }
+
+    function mytabs(evt, tabname) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("bg-teal-100", "text-teal-700");
+        }
+        document.getElementById(tabname).style.display = "block";
+        evt.currentTarget.classList.add("bg-teal-100", "text-teal-700");
+    }
+
+    // Get the element with id="defaultOpenVideoFrame" and click on it
+    document.getElementById("defaultOpenVideoFrame").click();
+</script>
+
+{% endblock %}
+
+
+
