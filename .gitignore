@@ -6,6 +6,8 @@ __pycache__
 */__pycache__
 RosWebServer/__pycache__
 RosWebApp/__pycache__
+RosWebApp/migrations/__pycache__
+theme/__pycache__
 db.sqlite3
 media
 
