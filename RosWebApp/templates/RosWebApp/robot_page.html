@@ -59,7 +59,7 @@
                     <div class="font-bold text-2xl text-center text-black">Data Display Panel</div>
                     <div class="flex flex-col">
                         <div class="my-2">
-                            <h4 class="text-xl my-1">UGV Tank Local Position</h4>
+                            <h4 class="text-xl my-1">Local Position</h4>
                             <p>
                                 <div>Position: x = <span id="odom_linear_x"></span></div> 
                                 <div>y = <span id="odom_linear_y"></span>, z = <span id="odom_linear_z"></span></div>
@@ -143,11 +143,24 @@
     );
 
     robot_websocket.onmessage = function(e){
-        console.log("onmessage")
+        console.log("onmessage");
+
+        const data = JSON.parse(e.data);
+
+        // console.log(data);
+
+        display_data(data);
     }
 
     robot_websocket.onclose = function(e){
         console.log('onclose')
+    }
+
+    function display_data(data) {
+
+        document.getElementById('odom_linear_x').textContent = data['local_position']['x'];
+        document.getElementById('odom_linear_y').textContent = data['local_position']['y'];
+        document.getElementById('odom_linear_z').textContent = data['local_position']['z'];
     }
 
     function mytabs(evt, tabname) {
