@@ -952,6 +952,14 @@ select {
   height: 100vh;
 }
 
+.h-\[640px\] {
+  height: 640px;
+}
+
+.h-\[645px\] {
+  height: 645px;
+}
+
 .w-14 {
   width: 3.5rem;
 }
@@ -990,6 +998,22 @@ select {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[900px\] {
+  width: 900px;
+}
+
+.w-\[880px\] {
+  width: 880px;
+}
+
+.w-\[870px\] {
+  width: 870px;
+}
+
+.w-\[860px\] {
+  width: 860px;
 }
 
 .min-w-full {
@@ -1111,6 +1135,11 @@ select {
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.object-right-bottom {
+  -o-object-position: right bottom;
+     object-position: right bottom;
 }
 
 .p-2 {
