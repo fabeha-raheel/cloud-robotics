@@ -17,6 +17,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
 
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+
     {% tailwind_css %}
 </head>
 
@@ -37,7 +40,9 @@
                 <div class="text-md">Prince Sattam bin Abdul Aziz University</div>
             </div>
             <div class="ml-6">
-                <img src="{% static 'RosWebApp/images/aeelab_logo.jpeg' %}" alt="logo-img" class="rounded-full h-16 w-16">
+                <a href="{% url 'admin:index' %}">
+                    <img src="{% static 'RosWebApp/images/aeelab_logo.jpeg' %}" alt="logo-img" class="rounded-full h-16 w-16">
+                </a>
             </div>
         </div>
     </nav>
