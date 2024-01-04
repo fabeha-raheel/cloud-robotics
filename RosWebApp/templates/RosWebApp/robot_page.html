@@ -1,6 +1,6 @@
 {% extends 'RosWebApp/base.html' %}
 
-{% block title %}Home |{% endblock %}
+{% block title %}{{ robot.robot_name }} |{% endblock %}
 
 {% block content %}
 
@@ -192,8 +192,6 @@
     );
 
     robot_websocket.onmessage = function(e){
-        console.log("onmessage");
-
         const data = JSON.parse(e.data);
 
         display_data(data);
@@ -203,31 +201,41 @@
         console.log('onclose')
     }
 
+    robot_websocket.onerror = function(e){
+        console.log('Websocket error: ', e);
+    }
+
     function display_data(data) {
 
-        document.getElementById('local_position_x').textContent = data['local_position']['x'];
-        document.getElementById('local_position_y').textContent = data['local_position']['y'];
-        document.getElementById('local_position_z').textContent = data['local_position']['z'];
+        document.getElementById('local_position_x').textContent = data.local_position.x;
+        document.getElementById('local_position_y').textContent = data.local_position.y;
+        document.getElementById('local_position_z').textContent = data.local_position.z;
 
-        document.getElementById('global_position_lat').textContent = data['global_position']['latitude'];
-        document.getElementById('global_position_long').textContent = data['global_position']['longitude'];
-        document.getElementById('global_position_alt').textContent = data['global_position']['altitude'];
+        document.getElementById('global_position_lat').textContent = data.global_position.latitude;
+        document.getElementById('global_position_long').textContent = data.global_position.longitude;
+        document.getElementById('global_position_alt').textContent = data.global_position.altitude;
 
-        document.getElementById('euler_orientation_rol').textContent = data['euler_orientation']['roll'];
-        document.getElementById('euler_orientation_pit').textContent = data['euler_orientation']['pitch'];
-        document.getElementById('euler_orientation_yaw').textContent = data['euler_orientation']['yaw'];
+        document.getElementById('euler_orientation_rol').textContent = data.euler_orientation.roll;
+        document.getElementById('euler_orientation_pit').textContent = data.euler_orientation.pitch;
+        document.getElementById('euler_orientation_yaw').textContent = data.euler_orientation.yaw;
 
-        document.getElementById('linear_velocity_vx').textContent = data['linear_velocity']['vx'];
-        document.getElementById('linear_velocity_vy').textContent = data['linear_velocity']['vy'];
-        document.getElementById('linear_velocity_vz').textContent = data['linear_velocity']['vz'];
+        document.getElementById('linear_velocity_vx').textContent = data.linear_velocity.vx;
+        document.getElementById('linear_velocity_vy').textContent = data.linear_velocity.vy;
+        document.getElementById('linear_velocity_vz').textContent = data.linear_velocity.vz;
         
-        document.getElementById('angular_velocity_wx').textContent = data['angular_velocity']['wx'];
-        document.getElementById('angular_velocity_wy').textContent = data['angular_velocity']['wy'];
-        document.getElementById('angular_velocity_wz').textContent = data['angular_velocity']['wz'];
+        document.getElementById('angular_velocity_wx').textContent = data.angular_velocity.wx;
+        document.getElementById('angular_velocity_wy').textContent = data.angular_velocity.wy;
+        document.getElementById('angular_velocity_wz').textContent = data.angular_velocity.wz;
 
-        document.getElementById('linear_acceleration_ax').textContent = data['linear_acceleration']['ax'];
-        document.getElementById('linear_acceleration_ay').textContent = data['linear_acceleration']['ay'];
-        document.getElementById('linear_acceleration_az').textContent = data['linear_acceleration']['az'];
+        document.getElementById('linear_acceleration_ax').textContent = data.linear_acceleration.ax;
+        document.getElementById('linear_acceleration_ay').textContent = data.linear_acceleration.ay;
+        document.getElementById('linear_acceleration_az').textContent = data.linear_acceleration.az;
+
+        if (data.video.frame !== null) {
+            const frameImageElement = document.getElementById('frameImage');
+                        frameImageElement.src = "data:image/jpeg;base64," + data.video.frame; // Assuming the frame is in JPEG format
+        }
+
     }
 
     function mytabs(evt, tabname) {

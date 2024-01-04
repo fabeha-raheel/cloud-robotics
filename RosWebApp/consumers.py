@@ -33,6 +33,7 @@ class WebRobotConsumer(AsyncWebsocketConsumer):
         linear_velocity = data['linear_velocity']
         angular_velocity = data['angular_velocity']
         linear_acceleration = data['linear_acceleration']
+        video = data['video']
 
         await self.channel_layer.group_send(
             self.robot_group_name,
@@ -44,7 +45,8 @@ class WebRobotConsumer(AsyncWebsocketConsumer):
                 'euler_orientation': euler_orientation,
                 'linear_velocity': linear_velocity,
                 'angular_velocity': angular_velocity,
-                'linear_acceleration': linear_acceleration
+                'linear_acceleration': linear_acceleration,
+                'video': video,
             }
         )
     
@@ -57,6 +59,7 @@ class WebRobotConsumer(AsyncWebsocketConsumer):
         linear_velocity = event['linear_velocity']
         angular_velocity = event['angular_velocity']
         linear_acceleration = event['linear_acceleration']
+        video = event['video']
 
         await self.send(text_data=json.dumps({
             'header': header,
@@ -65,5 +68,6 @@ class WebRobotConsumer(AsyncWebsocketConsumer):
             'euler_orientation': euler_orientation,
             'linear_velocity': linear_velocity,
             'angular_velocity': angular_velocity,
-            'linear_acceleration': linear_acceleration
+            'linear_acceleration': linear_acceleration,
+            'video': video,
         }))
