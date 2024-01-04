@@ -54,35 +54,84 @@
 
         <!-- Data Display Component -->
         <div class="h-[450px] mb-1">
-            <div class="h-full w-full rounded-xl border-2 border-teal-500 bg-white p-4">
-                <div class="">
-                    <div class="font-bold text-2xl text-center text-black">Data Display Panel</div>
-                    <div class="flex flex-col">
-                        <div class="my-2">
-                            <h4 class="text-xl my-1">Local Position</h4>
-                            <p>
-                                <div>Position: x = <span id="odom_linear_x"></span></div> 
-                                <div>y = <span id="odom_linear_y"></span>, z = <span id="odom_linear_z"></span></div>
-                                <div>Orientation: x = <span id="odom_angular_x"></span></div> 
-                                <div>y = <span id="odom_angular_y"></span>, z = <span id="odom_angular_z"></span></div>
-                            </p>
-                        </div>
-                        <div class="">
-                            <h4 class="text-xl my-1">UGV Tank IMU Data</h4>
-                            <p>
-                                <div>Orientation:</div>
-                                <div>x = <span id="imu_orient_x"></span>, y = <span id="imu_orient_y"></span></div>
-                                <div>z = <span id="imu_orient_z"></span>, w = <span id="imu_orient_w"></span></div>
-                                <div>Angular Velocity: x = <span id="imu_angVel_x"></span></div>
-                                <div>y = <span id="imu_angVel_y"></span>, z = <span id="imu_angVel_z"></span></div>
-                                <div>Linear Acceleration: x = <span id="imu_linearAcc_x"></span></div>
-                                <div>y = <span id="imu_linearAcc_y"></span>, z = <spanid="imu_linearAcc_z"></span></div>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            <div class="h-full w-full rounded-xl border-2 border-teal-500 bg-white py-3">
+                <div class="mb-2 text-center font-bold text-2xl text-black">Readings</div>
+                <table class="min-w-full overflow-hidden">
+                    <thead class="bg-teal-500 text-white">
+                        <tr>
+                            <th class="py-2 px-4 text-left">Category</th>
+                            <th class="py-2 px-4">latitude</th>
+                            <th class="py-2 px-4">longitude</th>
+                            <th class="py-2 px-4">altitude</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        <tr>
+                            <td class="py-2 px-4">Global Position</td>
+                            <td class="py-2 px-4 text-center"><span id="global_position_lat"></span></td>
+                            <td class="py-2 px-4 text-center"><span id="global_position_long"></span></td>
+                            <td class="py-2 px-4 text-center"><span id="global_position_alt"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="my-2 min-w-full overflow-hidden">
+                    <thead class="bg-teal-500 text-white">
+                        <tr>
+                            <th class="py-2 px-4 text-left">Category</th>
+                            <th class="py-2 px-4">roll</th>
+                            <th class="py-2 px-4">pitch</th>
+                            <th class="py-2 px-4">yaw</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        <tr>
+                            <td class="py-2 px-4">Euler Orientation</td>
+                            <td class="py-2 px-4 text-center"><span id="euler_orientation_rol"></span></td>
+                            <td class="py-2 px-4 text-center"><span id="euler_orientation_pit"></span></td>
+                            <td class="py-2 px-4 text-center"><span id="euler_orientation_yaw"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="my-2 min-w-full overflow-hidden">
+                    <thead class="bg-teal-500 text-white">
+                        <tr>
+                            <th class="py-2 px-4 text-left">Category</th>
+                            <th class="py-2 px-4">X</th>
+                            <th class="py-2 px-4">Y</th>
+                            <th class="py-2 px-4">Z</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        <tr>
+                            <td class="py-2 px-4">Local Position</td>
+                            <td class="py-2 px-4 text-center"><span id="local_position_x"></span></td>
+                            <td class="py-2 px-4 text-center"><span id="local_position_y"></span></td>
+                            <td class="py-2 px-4 text-center"><span id="local_position_z"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4">Linear Velocity</td>
+                            <td class="py-2 px-4 text-center"><span id="linear_velocity_vx"></span></td>
+                            <td class="py-2 px-4 text-center"><span id="linear_velocity_vy"></span></td>
+                            <td class="py-2 px-4 text-center"><span id="linear_velocity_vz"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4">Angular Velocity</td>
+                            <td class="py-2 px-4 text-center"><span id="angular_velocity_wx"></span></td>
+                            <td class="py-2 px-4 text-center"><span id="angular_velocity_wy"></span></td>
+                            <td class="py-2 px-4 text-center"><span id="angular_velocity_wz"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-2 px-4">Linear Acceleration</td>
+                            <td class="py-2 px-4 text-center"><span id="linear_acceleration_ax"></span></td>
+                            <td class="py-2 px-4 text-center"><span id="linear_acceleration_ay"></span></td>
+                            <td class="py-2 px-4 text-center"><span id="linear_acceleration_az"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+    
+        
 
         <!-- Controls Component -->
         <div class="h-[350px] mt-1">
@@ -158,9 +207,29 @@
 
     function display_data(data) {
 
-        document.getElementById('odom_linear_x').textContent = data['local_position']['x'];
-        document.getElementById('odom_linear_y').textContent = data['local_position']['y'];
-        document.getElementById('odom_linear_z').textContent = data['local_position']['z'];
+        document.getElementById('local_position_x').textContent = data['local_position']['x'];
+        document.getElementById('local_position_y').textContent = data['local_position']['y'];
+        document.getElementById('local_position_z').textContent = data['local_position']['z'];
+
+        document.getElementById('global_position_lat').textContent = data['global_position']['latitude'];
+        document.getElementById('global_position_long').textContent = data['global_position']['longitude'];
+        document.getElementById('global_position_alt').textContent = data['global_position']['altitude'];
+
+        document.getElementById('euler_orientation_rol').textContent = data['euler_orientation']['roll'];
+        document.getElementById('euler_orientation_pit').textContent = data['euler_orientation']['pitch'];
+        document.getElementById('euler_orientation_yaw').textContent = data['euler_orientation']['yaw'];
+
+        document.getElementById('linear_velocity_vx').textContent = data['linear_velocity']['vx'];
+        document.getElementById('linear_velocity_vy').textContent = data['linear_velocity']['vy'];
+        document.getElementById('linear_velocity_vz').textContent = data['linear_velocity']['vz'];
+        
+        document.getElementById('angular_velocity_wx').textContent = data['angular_velocity']['wx'];
+        document.getElementById('angular_velocity_wy').textContent = data['angular_velocity']['wy'];
+        document.getElementById('angular_velocity_wz').textContent = data['angular_velocity']['wz'];
+
+        document.getElementById('linear_acceleration_ax').textContent = data['linear_acceleration']['ax'];
+        document.getElementById('linear_acceleration_ay').textContent = data['linear_acceleration']['ay'];
+        document.getElementById('linear_acceleration_az').textContent = data['linear_acceleration']['az'];
     }
 
     function mytabs(evt, tabname) {
