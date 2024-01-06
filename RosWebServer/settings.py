@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'RosWebApp',
+    'DF_tank',
     'tailwind',
     'theme',
     'django_browser_reload',
