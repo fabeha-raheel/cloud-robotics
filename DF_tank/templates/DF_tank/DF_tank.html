@@ -1,0 +1,152 @@
+{% extends 'RosWebApp/base.html' %}
+
+{% block title %}{{ robot.robot_name }} |{% endblock %}
+
+{% block content %}
+
+<div class="font-sans">
+    <!-- Robot Name -->
+    <div class="font-bold text-center my-6 text-3xl">Direction Finding Tank Robot</div>
+    
+    <!-- Tabs Section -->
+    <div class="bg-white border border-teal-600 shadow-md rounded-lg overflow-hidden mx-5 h-[750px]">
+    
+        <!-- Tab Links -->
+        <div class="bg-gray-200">
+            <button class="tablink flex-1 rounded-t-lg p-2 focus:outline-none" onclick="df_tabs(event, 'LiveScan')" id="defaultOpenLiveScan">Live Scan</button>
+            <button class="tablink flex-1 rounded-t-lg p-2 focus:outline-none" onclick="df_tabs(event, 'LiveSpectrum')" id="defaultOpenLiveSpectrum">Live Spectrum</button>
+            <button class="tablink flex-1 rounded-t-lg p-2 focus:outline-none" onclick="df_tabs(event, 'ScanHistory')" id="defaultOpenScanHistory">Scan History</button>
+        </div>
+
+        <div class="tabcontents hidden p-2" id="LiveScan">
+            <div class="flex gap-2 justify-center my-1 h-[685px]">
+                <div class="bg-teal-200 rounded-lg w-4/6">
+                    <div class="my-10">
+                        <canvas id="jitterRadarChart" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+                <div class="bg-gray-700 w-2/6">
+                    <div class="text-white text-2xl text-center py-24">
+                        <div>Current Heading:</div>
+                        <div>15° N</div>
+                    </div>
+                    <div class="flex flex-col">
+                        <button class="bg-stone-200 p-2 my-1 mx-4 rounded-full">Arm/Disarm</button>
+                        <button class="bg-stone-200 p-2 my-1 mx-4 rounded-full">Auto</button>
+                        <button class="bg-stone-200 p-2 my-1 mx-4 rounded-full">Manual</button>
+                    </div>
+                    <div class="text-center my-4">
+                        <div class="justify-center items-center">
+                            <div class="flex flex-col justify-center items-center mb-4">
+                                <div class="flex p-4">
+                                    <div></div>
+                                    <button id="upBtn" class="bg-stone-200 w-14 h-14 rounded-full justify-center items-center">
+                                        <i class="material-icons text-black">arrow_upward</i>
+                                    </button>
+                                    <div></div>
+                                </div>
+                                <div class="p-4">
+                                    <button id="leftBtn" class="bg-stone-200 w-14 h-14 rounded-full mx-4">
+                                        <i class="material-icons text-black object-right-bottom">rotate_left</i>
+                                    </button>
+                                    <button id="stopBtn" class="bg-stone-200 w-14 h-14 rounded-full mx-4">
+                                        <i class="material-icons text-black">stop</i>
+                                    </button>
+                                    <button id="rightBtn" class="bg-stone-200 w-14 h-14 rounded-full mx-4">
+                                        <i class="material-icons text-black">rotate_right</i>
+                                    </button>
+                                </div>
+                                <div class="p-4">
+                                    <div></div>
+                                    <button id="downBtn" class="bg-stone-200 w-14 h-14 rounded-full">
+                                        <i class="material-icons text-black">arrow_downward</i>
+                                    </button>
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+
+        <div class="tabcontents hidden p-2" id="LiveSpectrum">
+            Live Spectrum Content
+        </div>
+
+        <div class="tabcontents hidden p-2" id="ScanHistory">
+            Scan History Content
+        </div>
+    
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<!-- {{ robot.robot_slug|json_script:"json-robotname" }} -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    
+    function df_tabs(evt, tabname) {
+        var i, tabcontents, tablink;
+        tablink = document.getElementsByClassName('tablink');
+        for(i=0; i<tablink.length; i++){
+            tablink[i].classList.remove("bg-white", "bg-gray-200");
+        }
+        tabcontents = document.getElementsByClassName('tabcontents');
+        for(i=0; i<tabcontents.length; i++){
+            tabcontents[i].style.display = 'none';
+        }
+        document.getElementById(tabname).style.display = "block";
+        evt.currentTarget.classList.add("bg-white");
+    }
+
+    // Get the element with id="defaultOpenVideoFrame" and click on it
+    document.getElementById("defaultOpenLiveScan").click();
+
+    var outerData = [0.00, 2.50, 5.00, 7.50, 10.00, 12.50, 15.00, 17.50];
+        var innerData = [0, 2, 5, 7, 10];
+
+    // Add jitter to the data
+    function addJitter(data, factor) {
+        return data.map(value => value + (Math.random() - 0.5) * factor);
+    }
+    
+    var jitteredInnerData = addJitter(innerData, 1);
+
+        var config = {
+            type: 'radar',
+            data: {
+                labels: outerData.map(String),
+                datasets: [{
+                    label: 'Jittered Inner Circles',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    data: jitteredInnerData,
+                }],
+            },
+            options: {
+                scale: {
+                    ticks: {
+                        beginAtZero: true,
+                        max: 20,
+                        stepSize: 2.5,
+                    },
+                },
+                aspectRatio: 2,
+            },
+        };
+
+        var ctx = document.getElementById('jitterRadarChart').getContext('2d');
+        var jitteredRadarChart = new Chart(ctx, config);
+</script>
+
+{% endblock %}
+
+
+

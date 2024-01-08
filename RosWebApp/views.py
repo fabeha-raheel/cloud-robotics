@@ -6,6 +6,7 @@ def home(request):
     robots = Robot.objects.all()
     context = {'robots': robots}
     return render(request, 'RosWebApp/frontpage.html', context)
+    # return render(request, 'RosWebApp/DF_tank.html')
 
 def robot_page(request, slug):
     robot = Robot.objects.get(robot_slug=slug)

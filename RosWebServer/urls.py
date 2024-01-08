@@ -22,8 +22,8 @@ from django.urls import path, include
 urlpatterns = [
     path('', include('RosWebApp.urls')),
     path('admin/', admin.site.urls),
+    path('df_tank/', include('DF_tank.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
-    path('DF_tank/', include('DF_tank.urls')),
 ]
 
 if settings.DEBUG:
