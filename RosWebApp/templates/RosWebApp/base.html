@@ -24,14 +24,20 @@
 </head>
 
 <body class="bg-gray-200 font-sans">
-    <nav class="bg-teal-500 p-6 flex justify-between items-center shadow">
+    <nav class="bg-[#397974] p-6 flex justify-between items-center shadow">
         <button onclick="navigateToHomePage()" class="flex items-center">
             {% if request.path == '/' %}
                 <!-- Hide the arrow if the page is in the root path -->
             {% else %}
                 <img src="{% static 'RosWebApp/images/left_arrow.png' %}" alt="logo-img" class="rounded-full h-14 w-14 rotate-180">
             {% endif %}
+            
+            {% if request.path == '/df_tank/' %}
+            <h1 class="text-white text-4xl font-bold ml-2">Direction Finding Tank</h1>
+            {% else %}
             <h1 class="text-white text-4xl font-bold ml-2">Robot Web Interface</h1>
+            {% endif %}
+            
         </button>
 
         <div class="flex items-center ml-6">

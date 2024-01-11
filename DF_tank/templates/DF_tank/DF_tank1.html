@@ -18,12 +18,13 @@
 
         <div class="tabcontents hidden p-1" id="LiveScan">
             <div class="flex gap-1 justify-center h-[770px]">
-                
-                <div class="w-[1200px] bg-[#397974] flex items-center justify-center rounded-lg">
-                    <div class="w-[700px] rounded-lg border-2 border-gray-700 bg-white">
-                        <canvas id="radarChart"></canvas>
+                <svg id="polarScatterPlot"></svg>
+                <!-- <canvas id="radarChart"></canvas> -->
+                <!-- <div class="bg-teal-600 h-[770px] flex items-center justify-center rounded-lg">
+                    <div class="w-[1700px] rounded-lg border-2 border-gray-700 bg-white">
+                      <canvas id="LineChart"></canvas>
                     </div>
-                </div>
+                </div> -->
                 <div class="bg-gray-700 w-2/6">
                     <div class="text-white text-2xl text-center py-24">
                         <div>Current Heading:</div>
@@ -238,43 +239,147 @@
         );
     }
 
-    const radarData = {
-        labels: ['0.00', '2.50', '5.00', '7.50', '10.00', '12.50', '15.00', '17.50'],
-        datasets: [{
-            label: 'My Radar Dataset',
-            data: [3, 5, 2, 8, 4], // Example data values
-            backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color
-            borderColor: 'rgba(75, 192, 192, 1)', // Border color
-            borderWidth: 2, // Border width
-            pointBackgroundColor: 'rgba(75, 192, 192, 1)', // Point fill color
-            pointBorderColor: '#fff', // Point border color
-            pointHoverRadius: 5, // Point hover radius
-            pointHoverBackgroundColor: 'rgba(75, 192, 192, 1)', // Point hover fill color
-            pointHoverBorderColor: 'rgba(220, 220, 220, 1)', // Point hover border color
-            pointRadius: 4, // Point radius
-            pointHitRadius: 10 // Point hit radius
-        }]
-    };
+    // const radarData = {
+    //     labels: ['Label 1', 'Label 2', 'Label 3', 'Label 4', 'Label 5'],
+    //     datasets: [{
+    //         label: 'My Radar Dataset',
+    //         data: [3, 5, 2, 8, 4], // Example data values
+    //         backgroundColor: 'rgba(75, 192, 192, 0.2)', // Fill color
+    //         borderColor: 'rgba(75, 192, 192, 1)', // Border color
+    //         borderWidth: 2, // Border width
+    //         pointBackgroundColor: 'rgba(75, 192, 192, 1)', // Point fill color
+    //         pointBorderColor: '#fff', // Point border color
+    //         pointHoverRadius: 5, // Point hover radius
+    //         pointHoverBackgroundColor: 'rgba(75, 192, 192, 1)', // Point hover fill color
+    //         pointHoverBorderColor: 'rgba(220, 220, 220, 1)', // Point hover border color
+    //         pointRadius: 4, // Point radius
+    //         pointHitRadius: 10 // Point hit radius
+    //     }]
+    // };
 
-    // Radar chart options
-    const radarOptions = {
-        scale: {
-            ticks: {
-                beginAtZero: true,
-                max: 10 // Set the maximum value on the scale
-            }
-        },
-        aspectRatio: 1
-    };
+    // // Radar chart options
+    // const radarOptions = {
+    //     scale: {
+    //         ticks: {
+    //             beginAtZero: true,
+    //             max: 10 // Set the maximum value on the scale
+    //         }
+    //     },
+    //     aspectRatio: 2
+    // };
 
-    // Create radar chart
-    const radarChart = new Chart(document.getElementById('radarChart'), {
-        type: 'radar',
-        data: radarData,
-        options: radarOptions
-    });
+    // // Create radar chart
+    // const radarChart = new Chart(document.getElementById('radarChart'), {
+    //     type: 'radar',
+    //     data: radarData,
+    //     options: radarOptions
+    // });
 
-    
+    var reMap = function(oldValue) {
+        var oldMin = 0,
+            oldMax = -359,
+            newMin = 0,
+            newMax = (Math.PI * 2),
+            newValue = (((oldValue - 90 - oldMin) * (newMax - newMin)) / (oldMax - oldMin)) + newMin;
+
+        return newValue;
+    }
+
+    var data1 = [
+        [reMap(25), 1, 20, 'label 1'],
+        [reMap(105), 0.8, 10, 'label 2'],
+        [reMap(266), 1, 8, 'label 3'],
+        [reMap(8), 0.2, 22, 'label 4'],
+        [reMap(189), 1, 28, 'label 5'],
+        [reMap(350), 0.6, 15, 'label 6'],
+        [reMap(119), 0.4, 24, 'label 7'],
+        [reMap(305), 0.8, 31, 'label 8']
+    ];
+
+    var width = 600,
+        height = 600,
+        radius = Math.min(width, height) / 2 - 30; // radius of the whole chart
+
+    var r = d3.scaleLinear()
+        .domain([0, 1])
+        .range([0, radius]);
+
+    var svg = d3.select('#polarScatterPlot')
+        .attr('width', width)
+        .attr('height', height)
+        .append('g')
+        .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+    var gr = svg.append('g')
+        .attr('class', 'r axis')
+        .selectAll('g')
+        .data(r.ticks(5).slice(1))
+        .enter().append('g');
+
+    gr.append('circle')
+        .attr('r', r);
+
+    var ga = svg.append('g')
+        .attr('class', 'a axis')
+        .selectAll('g')
+        .data(d3.range(0, 360, 30)) // line density
+        .enter().append('g')
+        .attr('transform', function(d) {
+            return 'rotate(' + -d + ')';
+        });
+
+    ga.append('line')
+        .attr('x2', radius);
+
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+    var line = d3.lineRadial()
+        .radius(function(d) {
+            return r(d[1]);
+        })
+        .angle(function(d) {
+            return -d[0] + Math.PI / 2;
+        });
+
+    var tooltip = d3.select("body")
+        .append("div")
+        .style("position", "absolute")
+        .style("z-index", "10")
+        .style("visibility", "hidden")
+        .text("a simple tooltip");
+
+    svg.selectAll('.point')
+        .data(data1)
+        .enter()
+        .append('circle')
+        .attr('class', 'point')
+        .attr('transform', function(d) {
+            var coors = line([d]).slice(1).slice(0, -1); // removes 'M' and 'Z' from string
+            return 'translate(' + coors + ')';
+        })
+        .attr('r', function(d) {
+            return d[2];
+        })
+        .attr('fill', function(d, i) {
+            return color(i);
+        })
+        .on("click", function(d) {
+            console.log(d);
+            // return tooltip.style("visibility", "visible");
+        });
+
+    // adding labels
+    svg.selectAll('.point-label')
+        .data(data1)
+        .enter().append("text")
+        .attr('class', 'point-label')
+        .attr('transform', function(d) {
+            var coors = line([d]).slice(1).slice(0, -1); // removes 'M' and 'Z' from string
+            return 'translate(' + coors + ')';
+        })
+        .text(function(d) {
+            return d[3];
+        });
 </script>
 
 {% endblock %}
