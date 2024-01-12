@@ -4,9 +4,32 @@
 
 {% block content %}
 
+{% load static %}
+
 <div class="bg-gray-200 font-sans">
     <div class="font-bold text-center my-12 text-4xl">
         <h1>Projects</h1>
+    </div>
+    <div class="flex justify-center items-center">
+        <div class="grid grid-cols-2 gap-12">
+            <div>
+                <a href="df_tank/">
+                    <div class="bg-white rounded-lg shadow-md p-6 w-96 flex items-center">
+                        <div>
+                            <img src="{% static 'RosWebApp/images/df_tank.jpeg' %}" alt="robot-img" class="rounded-full h-32 w-32"/>
+                        </div>
+                        <div class="mx-5">
+                            <div class="mt-4">
+                                <span class="font-semibold">Name:</span> DF Tank
+                            </div>
+                            <div class="mt-2">
+                                <span class="font-semibold">Type:</span> UGV
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
     
     <div class="font-bold text-center my-12 text-4xl">
