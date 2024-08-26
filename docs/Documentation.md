@@ -148,12 +148,16 @@ Before the next step, make sure you have nodejs and npm installed.
 
 Check nodejs version:
 ```bash
+sudo apt install nodejs
 node -v
 ```
 Upgrade nodejs:
 ```bash
 sudo apt upgrade nodejs
 ```
+
+nodejs version is 10.19.0 right now. 
+
 Install the latest version:
 ```bash
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
@@ -170,16 +174,19 @@ nvm use node
 
 node -v
 ```
+nodejs version should be 22.7.0 now
 
 Check npm version:
 ```bash
 npm -v
 ```
+
 Install npm latest version:
 ```bash
 npm install -g npm@latest
 npm -v
 ```
+npm version is 10.8.2 right now
 
 Run the next command. Install Tailwind CSS dependencies:
 ```bash
