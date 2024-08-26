@@ -1,0 +1,65 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock %} ROS WebApp</title>
+
+    <!-- Add Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Adding Google Material Icons -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+    {% tailwind_css %}
+  </head>
+
+  <body class="bg-gray-200 font-sans">
+    <nav class="bg-[#397974] p-6 flex justify-between items-center shadow">
+      <button onclick="navigateToHomePage()" class="flex items-center">
+        {% if request.path != '/' %}
+        <!-- Hide the arrow if the page is in the root path -->
+        <img
+          src="{% static 'cloud_robotics_app/images/left_arrow.png' %}"
+          alt="logo-img"
+          class="rounded-full h-14 w-14 rotate-180"
+        />
+        {% endif %}
+        <h1 class="text-white text-4xl font-bold ml-2">Robot Web Interface</h1>
+      </button>
+
+      <div class="flex items-center ml-6">
+        <div class="ml-6">
+          <a href="{% url 'admin:index' %}">
+            <img
+              src="{% static 'core/images/robot.jpg' %}"
+              alt="logo-img"
+              class="rounded-full h-16 w-16"
+            />
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <script>
+      function navigateToHomePage() {
+        // Replace 'your_home_page_url' with the actual URL of your home page
+        window.location.href = "/";
+      }
+    </script>
+
+    {% block scripts %}{% endblock %}
+  </body>
+</html>
