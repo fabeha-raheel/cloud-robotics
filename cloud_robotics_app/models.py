@@ -18,7 +18,7 @@ class Robot(models.Model):
     robot_name = models.CharField(max_length=30)
     robot_type = models.CharField(max_length=30, choices=ROBOT_TYPE_CHOICES)
     robot_slug = models.SlugField(unique=True)
-    robot_icon = models.ImageField(upload_to='RosWebApp/images', default='')
+    robot_icon = models.ImageField(upload_to='cloud_robotics_app/images', default='')
 
     def __str__(self):
         return self.robot_name

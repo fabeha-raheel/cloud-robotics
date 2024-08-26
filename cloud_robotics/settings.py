@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'django_browser_reload',
+    'channels',
+    'daphne',
+    'cloud_robotics_app',
 ]
 
 TAILWIND_APP_NAME = 'theme'
@@ -77,7 +80,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'cloud_robotics.wsgi.application'
+# WSGI_APPLICATION = 'cloud_robotics.wsgi.application'
+ASGI_APPLICATION = 'cloud_robotics.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 
 # Database
