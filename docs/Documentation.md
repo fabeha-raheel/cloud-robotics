@@ -1,5 +1,10 @@
 # Python Virtual Environment
 
+Install venv library in linux:
+```shell
+sudo apt install python3-venv
+```
+
 Create a python virtual environment:
 ```shell
 python -m venv <name_of_virtual_environment>
@@ -10,6 +15,32 @@ Activate Virtual Environment:
 ```shell
 source venv/bin/activate
 ```
+
+To deactivate the virtual environment:
+```shell
+deactivate
+```
+
+### Some Error Resolutions
+
+Create a virtual environment without pip and then install pip and python manually:
+```shell
+python -m venv --without-pip venv
+source venv/bin/activate
+curl https://bootstrap.pypa.io/get-pip.py | python
+```
+
+Problem with $PYTHONPATH environment variable ($PYTHONPATH=/home/fabeha/catkin_ws/devel/lib/python3/dist-packages:/opt/ros/noetic/lib/python3/dist-packages)
+This causes global site packages and ROS packages to be included in requirements.txt:
+Add the following lines at the end of the ven/bin/activate file:
+```bash
+# Remove unwanted paths from PYTHONPATH
+if [ -n "$PYTHONPATH" ]; then
+    PYTHONPATH=$(echo $PYTHONPATH | tr ':' '\n' | grep -v '/home/fabeha/catkin_ws/devel/lib/python3/dist-packages' | grep -v '/opt/ros/noetic/lib/python3/dist-packages' | tr '\n' ':' | sed 's/:$//')
+    export PYTHONPATH
+fi
+```
+Then deactivate and reactivate the virtual environment.
 
 # Packages to Install
 
